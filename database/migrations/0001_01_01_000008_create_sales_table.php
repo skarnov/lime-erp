@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Migrations\AuditableMigration;
 
-class CreateSalesTable extends Migration
+class CreateSalesTable extends AuditableMigration
 {
     /**
      * Run the migrations.
@@ -30,12 +30,8 @@ class CreateSalesTable extends Migration
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->tinyInteger('send_notification')->default(0);
             $table->text('note')->nullable();
-            $table->dateTime('created_at')->nullable();
-            $table->unsignedInteger('created_by')->nullable();
-            $table->dateTime('modified_at')->nullable();
-            $table->unsignedInteger('modified_by')->nullable();
-            $table->dateTime('deleted_at')->nullable();
-            $table->timestamps();
+            $this->addAuditColumns($table);
+            $table->softDeletes();
         });
     }
 

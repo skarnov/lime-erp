@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Migrations\AuditableMigration;
 
-class CreateTransactionsTable extends Migration
+class CreateTransactionsTable extends AuditableMigration
 {
     /**
      * Run the migrations.
@@ -21,14 +21,10 @@ class CreateTransactionsTable extends Migration
             $table->decimal('amount', 10, 2)->default(0.00);
             $table->decimal('paid_amount', 10, 2)->default(0.00);
             $table->decimal('due_amount', 10, 2)->default(0.00);
-            $table->dateTime('created_at')->nullable();
-            $table->unsignedInteger('created_by')->nullable();
-            $table->dateTime('modified_at')->nullable();
-            $table->unsignedInteger('modified_by')->nullable();
-            $table->dateTime('deleted_at')->nullable();
-            $table->timestamps();
-
             $table->index('fk_reference_id');
+
+            $this->addAuditColumns($table);
+            $table->softDeletes();
         });
     }
 

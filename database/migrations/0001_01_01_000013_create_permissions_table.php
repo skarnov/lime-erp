@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Migrations\AuditableMigration;
 
-class CreatePermissionsTable extends Migration
+class CreatePermissionsTable extends AuditableMigration
 {
     /**
      * Run the migrations.
@@ -18,7 +18,6 @@ class CreatePermissionsTable extends Migration
             $table->unsignedBigInteger('fk_role_id');
             $table->foreign('fk_role_id')->references('id')->on('roles')->onDelete('cascade');
             $table->string('name', 100);
-            $table->timestamps();
         });
     }
 

@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Migrations\AuditableMigration;
 
-class CreateInventoriesTable extends Migration
+class CreateInventoriesTable extends AuditableMigration
 {
     /**
      * Run the migrations.
@@ -31,11 +31,8 @@ class CreateInventoriesTable extends Migration
             $table->text('description')->nullable();
             $table->enum('type', ['product', 'service']);
             $table->enum('status', ['active', 'inactive', 'archive'])->default('active');
-            $table->timestamps();
-            $table->unsignedBigInteger('created_by')->nullable();
-            $table->timestamp('modified_at')->nullable();
-            $table->unsignedBigInteger('modified_by')->nullable();
-            $table->timestamp('deleted_at')->nullable();
+            $this->addAuditColumns($table);
+            $table->softDeletes();
         });
     }
 

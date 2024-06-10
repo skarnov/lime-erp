@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Migrations\AuditableMigration;
 
-class CreateRoleRelationTable extends Migration
+class CreateRoleRelationTable extends AuditableMigration
 {
     /**
      * Run the migrations.
@@ -19,7 +19,6 @@ class CreateRoleRelationTable extends Migration
             $table->foreign('fk_admin_id')->references('id')->on('admins')->onDelete('cascade');
             $table->unsignedBigInteger('fk_role_id');
             $table->foreign('fk_role_id')->references('id')->on('roles')->onDelete('cascade');
-            $table->timestamps();
         });
     }
 

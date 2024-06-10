@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Migrations\AuditableMigration;
 
-class CreateProductsTable extends Migration
+class CreateProductsTable extends AuditableMigration
 {
     /**
      * Run the migrations.
@@ -35,7 +35,7 @@ class CreateProductsTable extends Migration
             $table->text('attribute')->nullable();
             $table->text('description')->nullable();
             $table->enum('status', ['active', 'inactive', 'archive'])->default('active');
-            $table->timestamps();
+            $this->addAuditColumns($table);
             $table->softDeletes();
         });
     }

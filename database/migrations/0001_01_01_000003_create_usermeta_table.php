@@ -18,7 +18,6 @@ class CreateUsermetaTable extends Migration
             $table->unsignedBigInteger('fk_user_id');
             $table->string('key', 30);
             $table->text('value');
-            $table->timestamps();
         });
     }
 

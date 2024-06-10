@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Migrations\AuditableMigration;
 
-class CreateFiscalYearTable extends Migration
+class CreateFiscalYearTable extends AuditableMigration
 {
     /**
      * Run the migrations.
@@ -17,7 +17,8 @@ class CreateFiscalYearTable extends Migration
             $table->increments('id');
             $table->date('fiscal_year_start');
             $table->date('fiscal_year_end');
-            $table->timestamps();
+            $this->addAuditColumns($table);
+            $table->softDeletes();
         });
     }
 

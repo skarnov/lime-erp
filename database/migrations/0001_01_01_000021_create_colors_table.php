@@ -3,8 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Migrations\AuditableMigration;
 
-class CreateConfigurationsTable extends Migration
+class CreateColorsTable extends AuditableMigration
 {
     /**
      * Run the migrations.
@@ -13,10 +14,10 @@ class CreateConfigurationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('configurations', function (Blueprint $table) {
-            $table->id();
-            $table->string('name', 40);
-            $table->text('setting');
+        Schema::create('colors', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name', 20);
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $this->addAuditColumns($table);
             $table->timestamps();
         });
@@ -29,6 +30,6 @@ class CreateConfigurationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('configurations');
+        Schema::dropIfExists('colors');
     }
 }

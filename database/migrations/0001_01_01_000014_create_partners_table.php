@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Migrations\AuditableMigration;
 
-class CreatePartnersTable extends Migration
+class CreatePartnersTable extends AuditableMigration
 {
     /**
      * Run the migrations.
@@ -23,10 +23,8 @@ class CreatePartnersTable extends Migration
             $table->decimal('total_investment', 10, 2)->default(0.00);
             $table->decimal('total_profit', 10, 2)->default(0.00);
             $table->enum('status', ['active', 'inactive'])->default('active');
-            $table->timestamps();
-            $table->unsignedBigInteger('created_by')->nullable();
-            $table->unsignedBigInteger('modified_by')->nullable();
-            $table->timestamp('deleted_at')->nullable();
+            $this->addAuditColumns($table);
+            $table->softDeletes();
         });
     }
 

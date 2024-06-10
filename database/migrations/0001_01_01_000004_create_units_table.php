@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Migrations\AuditableMigration;
 
-class CreateUnitsTable extends Migration
+class CreateUnitsTable extends AuditableMigration
 {
     /**
      * Run the migrations.
@@ -17,12 +17,8 @@ class CreateUnitsTable extends Migration
             $table->increments('id');
             $table->string('name', 20);
             $table->enum('status', ['active', 'inactive'])->default('active');
-            $table->dateTime('created_at')->nullable();
-            $table->unsignedInteger('created_by')->nullable();
-            $table->dateTime('modified_at')->nullable();
-            $table->unsignedInteger('modified_by')->nullable();
-            $table->dateTime('deleted_at')->nullable();
-            $table->timestamps();
+            $this->addAuditColumns($table);
+            $table->softDeletes();
         });
     }
 

@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Migrations\AuditableMigration;
 
-class CreateSizesTable extends Migration
+class CreateSizesTable extends AuditableMigration
 {
     /**
      * Run the migrations.
@@ -17,12 +17,8 @@ class CreateSizesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 20);
             $table->enum('status', ['active', 'inactive'])->default('active');
-            $table->dateTime('created_at')->nullable();
-            $table->unsignedInteger('created_by')->nullable();
-            $table->dateTime('modified_at')->nullable();
-            $table->unsignedInteger('modified_by')->nullable();
-            $table->dateTime('deleted_at')->nullable();
-            $table->timestamps();
+            $this->addAuditColumns($table);
+            $table->softDeletes();
         });
     }
 

@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Migrations\AuditableMigration;
 
-class CreateUsersTable extends Migration
+class CreateUsersTable extends AuditableMigration
 {
     /**
      * Run the migrations.
@@ -29,7 +29,8 @@ class CreateUsersTable extends Migration
             $table->text('address')->nullable();
             $table->enum('status', ['active', 'inactive', 'archive'])->default('active');
             $table->rememberToken();
-            $table->timestamps();
+            $this->addAuditColumns($table);
+            $table->softDeletes();
             $table->index('email');
         });
 

@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Migrations\AuditableMigration;
 
-class CreateNotificationsTable extends Migration
+class CreateNotificationsTable extends AuditableMigration
 {
     /**
      * Run the migrations.
@@ -19,9 +19,8 @@ class CreateNotificationsTable extends Migration
             $table->text('link');
             $table->text('notification');
             $table->enum('view_status', ['seen', 'unseen'])->default('unseen');
-            $table->timestamps();
-            $table->unsignedBigInteger('created_by')->nullable();
-            $table->timestamp('deleted_at')->nullable();
+            $this->addAuditColumns($table);
+            $table->softDeletes();
         });
     }
 
