@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateConfigurationsTable extends Migration
+class CreateCashbookTable extends AuditableMigration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateConfigurationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('configurations', function (Blueprint $table) {
-            $table->id();
-            $table->string('name', 40);
-            $table->text('setting');
+        Schema::create('cashbook', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('table_name', 100);
+            $table->unsignedBigInteger('fk_reference_id');
+            $table->text('description')->nullable();
+            $table->decimal('in_amount', 10, 2)->nullable();
+            $table->decimal('out_amount', 10, 2)->nullable();
             $this->addAuditColumns($table);
             $table->timestamps();
             $table->softDeletes();
@@ -30,6 +33,6 @@ class CreateConfigurationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('configurations');
+        Schema::dropIfExists('cashbook');
     }
 }
