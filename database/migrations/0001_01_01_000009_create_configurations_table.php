@@ -4,7 +4,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Migrations\AuditableMigration;
 
-class CreatePermissionsTable extends AuditableMigration
+class CreateConfigurationsTable extends AuditableMigration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreatePermissionsTable extends AuditableMigration
      */
     public function up()
     {
-        Schema::create('permissions', function (Blueprint $table) {
+        Schema::create('configurations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('fk_role_id');
-            $table->foreign('fk_role_id')->references('id')->on('roles')->onDelete('cascade');
-            $table->string('name', 100);
+            $table->string('name', 40);
+            $table->text('setting');
+            $this->addAuditColumns($table);
+            $table->softDeletes();
         });
     }
 
@@ -28,6 +29,6 @@ class CreatePermissionsTable extends AuditableMigration
      */
     public function down()
     {
-        Schema::dropIfExists('permissions');
+        Schema::dropIfExists('configurations');
     }
 }

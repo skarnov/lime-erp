@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Migrations\AuditableMigration;
 
-class CreateBalancesTable extends AuditableMigration
+class CreateColorsTable extends AuditableMigration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateBalancesTable extends AuditableMigration
      */
     public function up()
     {
-        Schema::create('balances', function (Blueprint $table) {
+        Schema::create('colors', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('fk_user_id');
-            $table->decimal('amount', 10, 2)->nullable();
+            $table->string('name', 20);
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $this->addAuditColumns($table);
-            $table->timestamps();
             $table->softDeletes();
         });
     }
@@ -30,6 +29,6 @@ class CreateBalancesTable extends AuditableMigration
      */
     public function down()
     {
-        Schema::dropIfExists('balances');
+        Schema::dropIfExists('colors');
     }
 }

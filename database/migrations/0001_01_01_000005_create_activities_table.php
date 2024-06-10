@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Migrations\AuditableMigration;
 
 class CreateActivitiesTable extends AuditableMigration
 {
@@ -24,7 +24,6 @@ class CreateActivitiesTable extends AuditableMigration
             $table->string('visitor_city', 100)->nullable();
             $table->string('visitor_address', 150)->nullable();
             $this->addAuditColumns($table);
-            $table->timestamps();
             $table->softDeletes();
         });
     }

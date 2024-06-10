@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Migrations\AuditableMigration;
 
 class CreateCartsTable extends AuditableMigration
 {
@@ -24,7 +24,6 @@ class CreateCartsTable extends AuditableMigration
             $table->decimal('grandTotal', 10, 2)->default(0.00);
             $table->decimal('buyTotal', 10, 2)->default(0.00);
             $this->addAuditColumns($table);
-            $table->timestamps();
             $table->softDeletes();
         });
     }

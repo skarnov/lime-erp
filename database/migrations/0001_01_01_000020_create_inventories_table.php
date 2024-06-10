@@ -15,10 +15,16 @@ class CreateInventoriesTable extends AuditableMigration
     {
         Schema::create('inventories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('fk_brand_id')->nullable();
-            $table->unsignedBigInteger('fk_model_id')->nullable();
-            $table->unsignedInteger('fk_category_id')->nullable();
-            $table->unsignedInteger('fk_subcategory_id')->nullable();
+            $table->bigInteger('fk_brand_id')->unsigned()->nullable();
+            $table->foreign('fk_brand_id')->references('id')->on('brands')->onDelete('cascade');
+            $table->bigInteger('fk_model_id')->unsigned()->nullable();
+            $table->foreign('fk_model_id')->references('id')->on('brands')->onDelete('cascade');
+            $table->unsignedBigInteger('fk_category_id')->nullable();
+            $table->foreign('fk_category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->unsignedBigInteger('fk_subcategory_id')->nullable();
+            $table->foreign('fk_subcategory_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->unsignedBigInteger('fk_partner_id')->nullable();
+            $table->foreign('fk_partner_id')->references('id')->on('partners')->onDelete('cascade');
             $table->string('name', 200);
             $table->string('url_slug', 250);
             $table->string('image', 100)->nullable();
@@ -31,6 +37,11 @@ class CreateInventoriesTable extends AuditableMigration
             $table->text('description')->nullable();
             $table->enum('type', ['product', 'service']);
             $table->enum('status', ['active', 'inactive', 'archive'])->default('active');
+            $table->index('fk_brand_id');
+            $table->index('fk_model_id');
+            $table->index('fk_category_id');
+            $table->index('fk_subcategory_id');
+            $table->index('fk_partner_id');
             $this->addAuditColumns($table);
             $table->softDeletes();
         });

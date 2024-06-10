@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Migrations\AuditableMigration;
 
 class CreateCategoriesTable extends AuditableMigration
 {
@@ -21,7 +21,6 @@ class CreateCategoriesTable extends AuditableMigration
             $table->string('url_slug', 100);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $this->addAuditColumns($table);
-            $table->timestamps();
             $table->softDeletes();
             $table->foreign('fk_category_id')->references('id')->on('categories')->onDelete('cascade');
         });

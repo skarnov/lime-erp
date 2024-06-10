@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Migrations\AuditableMigration;
 
 class CreateCashbookTable extends AuditableMigration
 {
@@ -20,9 +20,8 @@ class CreateCashbookTable extends AuditableMigration
             $table->text('description')->nullable();
             $table->decimal('in_amount', 10, 2)->nullable();
             $table->decimal('out_amount', 10, 2)->nullable();
-            $this->addAuditColumns($table);
-            $table->timestamps();
             $table->softDeletes();
+            $this->addAuditColumns($table);
         });
     }
 

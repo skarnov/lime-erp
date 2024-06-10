@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Migrations\AuditableMigration;
 
 class CreateAdminsTable extends AuditableMigration
 {
@@ -28,7 +28,6 @@ class CreateAdminsTable extends AuditableMigration
             $table->rememberToken();
             $this->addAuditColumns($table);
             $table->softDeletes();
-            $table->timestamps();
         });
 
         Schema::create('admin_password_reset_tokens', function (Blueprint $table) {

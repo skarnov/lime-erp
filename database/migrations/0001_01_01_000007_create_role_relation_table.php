@@ -1,10 +1,10 @@
 <?php
 
+use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Migrations\AuditableMigration;
 
-class CreateRoleRelationTable extends AuditableMigration
+class CreateRoleRelationTable extends Migration
 {
     /**
      * Run the migrations.
